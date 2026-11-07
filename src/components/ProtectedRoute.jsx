@@ -1,0 +1,27 @@
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
+export function ProtectedRoute({ children, adminOnly = false }) {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '60vh' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div className="spinner" />
+          <p style={{ marginTop: '1rem', color: 'var(--text-muted)' }}>Authenticating...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  if (adminOnly && !isAdmin) {
+    return <Navigate to="/" replace />;
+  }
+
+  return children;
+}

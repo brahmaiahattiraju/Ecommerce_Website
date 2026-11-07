@@ -1,0 +1,541 @@
+/* ==========================================================================
+   AURA DESIGN SYSTEM - CORE VARIABLES, TOKENS & FOUNDATIONS
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  /* Color Palette */
+  --bg-primary: #070b13;
+  --bg-secondary: #0d1322;
+  --bg-surface: #141b2d;
+  --bg-surface-elevated: #1e2842;
+  --bg-glass: rgba(13, 19, 34, 0.75);
+  --bg-glass-card: rgba(19, 27, 46, 0.7);
+  --bg-glass-hover: rgba(33, 45, 75, 0.6);
+
+  --border-glass: rgba(255, 255, 255, 0.08);
+  --border-glass-light: rgba(255, 255, 255, 0.14);
+  --border-focus: #6366f1;
+  --border-subtle: rgba(255, 255, 255, 0.07);
+
+  /* Brand Accents */
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --primary-glow: rgba(99, 102, 241, 0.4);
+  --primary-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+  --secondary-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+  --card-gradient: linear-gradient(145deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 100%);
+
+  --accent-cyan: #06b6d4;
+  --accent-amber: #f59e0b;
+  --accent-emerald: #10b981;
+  --accent-rose: #f43f5e;
+  --accent-purple: #a855f7;
+
+  /* Typography */
+  --font-heading: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Text Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.35);
+  --shadow-md: 0 6px 24px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 14px 45px rgba(0, 0, 0, 0.65);
+  --shadow-glow: 0 0 25px var(--primary-glow);
+
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 22px;
+  --radius-full: 9999px;
+  --radius-pill: 9999px;
+
+  /* Clean White Theme & Apple Minimalist Light Design System Tokens */
+  --bg-base: #f8fafc;
+  --bg-elevated: #ffffff;
+  --bg-surface: #ffffff;
+  --bg-surface-elevated: #ffffff;
+  --bg-glass: rgba(255, 255, 255, 0.88);
+  --bg-glass-card: #ffffff;
+  --bg-glass-hover: #f1f5f9;
+
+  --border-glass: #e2e8f0;
+  --border-glass-light: #f1f5f9;
+  --border-glass-glow: rgba(79, 70, 229, 0.25);
+  --border-focus: #4f46e5;
+  --border-subtle: #edf2f7;
+
+  /* Brand Accents - Royal Indigo & Electric Blue */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --primary-light: #6366f1;
+  --primary-glow: rgba(79, 70, 229, 0.2);
+  --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  --apple-blue: #0071e3;
+  --apple-blue-hover: #0077ed;
+  --secondary-gradient: linear-gradient(135deg, #0284c7 0%, #4f46e5 100%);
+  --card-gradient: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+
+  --accent-cyan: #0284c7;
+  --accent-amber: #d97706;
+  --accent-gold: #d97706;
+  --accent-emerald: #059669;
+  --accent-rose: #e11d48;
+  --accent-purple: #7c3aed;
+
+  /* Typography */
+  --font-heading: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Outfit', 'Inter', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', sans-serif;
+
+  /* Text Colors - High Contrast Crisp Modern */
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+  --text-dim: #94a3b8;
+
+  /* Shadows - Soft diffuse luxury light shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 20px -2px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 12px 35px -4px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 25px rgba(79, 70, 229, 0.15);
+  --shadow-glass: 0 8px 30px rgba(0, 0, 0, 0.05);
+
+  /* Transitions */
+  --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+  --radius-pill: 9999px;
+}
+
+/* Base & Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  width: 100%;
+  max-width: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--bg-base);
+  background-image: 
+    radial-gradient(at 10% 10%, rgba(99, 102, 241, 0.04) 0px, transparent 45%),
+    radial-gradient(at 90% 20%, rgba(56, 189, 248, 0.04) 0px, transparent 45%),
+    radial-gradient(at 50% 85%, rgba(168, 85, 247, 0.03) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, #f8fafc 0px, transparent 80%);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+#root, .store-layout {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 100vh;
+  margin: 0 !important;
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  font-size: inherit;
+  transition: all var(--transition-normal);
+}
+
+/* Form Controls */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  text-align: left;
+  width: 100%;
+}
+
+.form-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.01em;
+}
+
+.form-input, input[type="text"], input[type="email"], input[type="password"], input[type="tel"], input[type="number"], input[type="url"], select, textarea {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: var(--radius-md);
+  padding: 0.75rem 1.15rem;
+  outline: none;
+  transition: all var(--transition-fast);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.form-input:focus, input:focus, select:focus, textarea:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.18);
+}
+
+.form-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+@media (max-width: 640px) {
+  .form-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Cards */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: var(--radius-xl);
+  box-shadow: 0 10px 30px -5px rgba(15, 23, 42, 0.06);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.1);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.01em;
+  transition: all var(--transition-normal);
+  white-space: nowrap;
+  user-select: none;
+}
+
+.btn-primary {
+  background: var(--primary-gradient);
+  color: #ffffff !important;
+  box-shadow: 0 4px 18px var(--primary-glow);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+  filter: brightness(1.05);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(30, 41, 68, 0.8);
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+}
+
+.btn-secondary:hover {
+  background: rgba(43, 58, 96, 0.9);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-primary) !important;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: #ffffff !important;
+  background: rgba(99, 102, 241, 0.12);
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.2);
+  transform: translateY(-2px);
+}
+
+.btn-sm {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.84rem;
+  border-radius: var(--radius-sm);
+}
+
+.btn-lg {
+  padding: 0.95rem 2rem;
+  font-size: 1.05rem;
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+}
+
+/* Gradients & Text */
+.gradient-text {
+  background: var(--primary-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
+}
+
+.page-title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-bottom: 0.5rem;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.95rem 1.35rem;
+  border-radius: var(--radius-md);
+  background: rgba(19, 27, 46, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  font-size: 0.92rem;
+  font-weight: 500;
+  max-width: 420px;
+  animation: slideInRight 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.toast-success {
+  border-left: 4px solid var(--accent-emerald);
+}
+
+.toast-error {
+  border-left: 4px solid var(--accent-rose);
+}
+
+.toast-info {
+  border-left: 4px solid var(--primary);
+}
+
+/* Loading Spinner */
+.loading-spinner, .spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.08);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* ==========================================================================
+   AMAZON UI UTILITY SYSTEM
+   ========================================================================== */
+.btn-amazon-cart {
+  background: var(--amazon-yellow);
+  color: #0f1111;
+  font-weight: 600;
+  border: 1px solid var(--amazon-yellow-border);
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1.25rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+.btn-amazon-cart:hover {
+  background: var(--amazon-yellow-hover);
+  box-shadow: 0 4px 12px rgba(254, 216, 20, 0.35);
+  transform: translateY(-1px);
+}
+.btn-amazon-cart:active {
+  transform: translateY(0);
+}
+
+.btn-amazon-buy {
+  background: var(--amazon-orange);
+  color: #0f1111;
+  font-weight: 600;
+  border: 1px solid #ff8f00;
+  border-radius: var(--radius-full);
+  padding: 0.55rem 1.25rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all var(--transition-fast);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  user-select: none;
+}
+.btn-amazon-buy:hover {
+  background: var(--amazon-orange-hover);
+  box-shadow: 0 4px 12px rgba(255, 164, 28, 0.35);
+  transform: translateY(-1px);
+}
+
+.badge-amazon-deal {
+  background: var(--amazon-deal-red);
+  color: #ffffff;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.22rem 0.6rem;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 6px rgba(204, 12, 57, 0.35);
+}
+
+.badge-amazon-bestseller {
+  background: var(--amazon-bestseller);
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  box-shadow: 0 2px 6px rgba(230, 122, 0, 0.3);
+}
+
+.badge-amazon-prime {
+  color: var(--amazon-prime-blue);
+  font-size: 0.88rem;
+  font-weight: 800;
+  font-style: italic;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  letter-spacing: -0.02em;
+}
+.badge-amazon-prime span.check {
+  font-style: normal;
+  font-size: 0.95rem;
+  font-weight: 900;
+}
+
+.amazon-price-currency {
+  font-size: 0.72em;
+  vertical-align: super;
+  font-weight: 600;
+  margin-right: 1px;
+}
+
