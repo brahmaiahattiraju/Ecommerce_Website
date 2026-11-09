@@ -110,11 +110,7 @@ export default function WishlistPage() {
           </div>
         ) : (
           /* Wishlist Items Grid */
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-            gap: '1.5rem'
-          }}>
+          <div className="customer-wishlist-grid">
             {items.map((item) => {
               const price = Number(item.price) || 0;
               const comp = Number(item.comparePrice) || Math.round(price * 1.25);
@@ -136,7 +132,7 @@ export default function WishlistPage() {
                   }}
                 >
                   {/* Image Stage */}
-                  <div style={{ position: 'relative', height: '220px', background: '#f8fafc', overflow: 'hidden' }}>
+                  <div className="customer-wishlist-card-media" style={{ position: 'relative', height: '220px', background: '#f8fafc', overflow: 'hidden' }}>
                     <Link to={`/products/${item.id}`}>
                       <img
                         src={item.imageUrl || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600'}
@@ -196,6 +192,7 @@ export default function WishlistPage() {
 
                     <Link
                       to={`/products/${item.id}`}
+                      className="customer-wishlist-card-title"
                       style={{
                         fontSize: '0.95rem',
                         fontWeight: 700,
@@ -215,10 +212,10 @@ export default function WishlistPage() {
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.3rem', marginBottom: '0.75rem' }}>
                       <Star size={13} fill="#f59e0b" color="#f59e0b" />
                       <span style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>{item.rating || 4.8}</span>
-                      <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>• Verified Authentic</span>
+                      <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>• Authentic</span>
                     </div>
 
-                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginTop: 'auto', marginBottom: '1rem' }}>
+                    <div className="customer-wishlist-card-price" style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginTop: 'auto', marginBottom: '1rem' }}>
                       <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>
                         {formatINRCompact(item.price)}
                       </span>
@@ -233,6 +230,7 @@ export default function WishlistPage() {
                     <button
                       type="button"
                       onClick={() => handleMoveToCart(item)}
+                      className="customer-wishlist-card-btn"
                       style={{
                         width: '100%',
                         background: '#0f172a',

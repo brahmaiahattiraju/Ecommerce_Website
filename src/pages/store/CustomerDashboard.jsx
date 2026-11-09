@@ -115,41 +115,17 @@ export default function CustomerDashboard() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '1100px', padding: '3rem 1.5rem 6rem' }}>
+    <div className="customer-dashboard-container">
       
       {/* Profile Welcome Hero Banner */}
-      <div style={{ 
-        padding: '2.5rem', 
-        marginBottom: '2.25rem', 
-        background: '#ffffff',
-        borderRadius: '24px',
-        border: '1px solid #e2e8f0',
-        boxShadow: '0 8px 30px -4px rgba(15, 23, 42, 0.05)',
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '1.5rem'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem' }}>
-          <div style={{ 
-            width: '72px', 
-            height: '72px', 
-            borderRadius: '20px', 
-            background: 'linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%)', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            color: '#fff', 
-            fontWeight: 900, 
-            fontSize: '1.8rem',
-            boxShadow: '0 8px 25px rgba(79, 70, 229, 0.25)'
-          }}>
+      <div className="customer-hero-card">
+        <div className="customer-hero-left">
+          <div className="customer-hero-avatar">
             {user?.fullName?.charAt(0) || 'M'}
           </div>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', marginBottom: '0.35rem', flexWrap: 'wrap' }}>
-              <h1 style={{ fontSize: '1.85rem', fontWeight: 900, color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>
+              <h1 className="customer-hero-title" style={{ fontSize: '1.85rem', fontWeight: 900, color: '#0f172a', margin: 0, letterSpacing: '-0.02em' }}>
                 Welcome back, {user?.fullName || 'Privilege Member'}!
               </h1>
               <span style={{ 
@@ -171,7 +147,7 @@ export default function CustomerDashboard() {
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+        <div className="customer-hero-actions">
           <Link
             to="/shop"
             style={{
@@ -232,108 +208,93 @@ export default function CustomerDashboard() {
       </div>
 
       {/* Customer Metrics Overview */}
-      <div style={{ 
-        display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
-        gap: '1.25rem',
-        marginBottom: '2.5rem'
-      }}>
+      <div className="customer-kpi-grid">
         {/* Wishlist KPI Card */}
         <Link 
           to="/wishlist" 
+          className="customer-kpi-card"
           style={{ 
-            background: '#ffffff', 
-            padding: '1.5rem', 
-            borderRadius: '18px', 
             border: '1px solid #fecdd3', 
             boxShadow: '0 2px 8px rgba(225, 29, 72, 0.05)',
             textDecoration: 'none',
             display: 'block',
-            transition: 'all 0.2s ease'
           }}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#e11d48', textTransform: 'uppercase' }}>Saved Wishlist</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#fff1f2', color: '#e11d48', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Heart size={18} fill="#e11d48" />
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#e11d48', textTransform: 'uppercase' }}>Saved Wishlist</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#fff1f2', color: '#e11d48', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Heart size={16} fill="#e11d48" />
             </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a' }}>{wishlistCount}</div>
-          <div style={{ fontSize: '0.76rem', color: '#e11d48', fontWeight: 700, marginTop: '0.25rem' }}>View saved pieces →</div>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>{wishlistCount}</div>
+          <div style={{ fontSize: '0.74rem', color: '#e11d48', fontWeight: 700, marginTop: '0.2rem' }}>Saved items →</div>
         </Link>
-        <div style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Reservations</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#eef2ff', color: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Package size={18} />
+        
+        <div className="customer-kpi-card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Orders</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#eef2ff', color: '#4f46e5', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Package size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a' }}>{orders.length}</div>
-          <div style={{ fontSize: '0.76rem', color: '#059669', fontWeight: 600, marginTop: '0.25rem' }}>Lifetime acquisitions</div>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>{orders.length}</div>
+          <div style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 600, marginTop: '0.2rem' }}>Lifetime orders</div>
         </div>
 
-        <div style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Active In Transit</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#f0f9ff', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Truck size={18} />
+        <div className="customer-kpi-card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>In Transit</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#f0f9ff', color: '#0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Truck size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a' }}>{activeOrders.length}</div>
-          <div style={{ fontSize: '0.76rem', color: '#64748b', marginTop: '0.25rem' }}>Dispatched via courier</div>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>{activeOrders.length}</div>
+          <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '0.2rem' }}>Active courier</div>
         </div>
 
-        <div style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Portfolio Valuation</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <DollarSign size={18} />
+        <div className="customer-kpi-card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Total Spent</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#ecfdf5', color: '#059669', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <DollarSign size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a' }}>{formatINR(totalSpent)}</div>
-          <div style={{ fontSize: '0.76rem', color: '#64748b', marginTop: '0.25rem' }}>Total value acquired</div>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>{formatINR(totalSpent)}</div>
+          <div style={{ fontSize: '0.74rem', color: '#64748b', marginTop: '0.2rem' }}>Acquisition value</div>
         </div>
 
-        {/* Customer Vouchers KPI */}
-        <div style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Available Coupons</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#fdf2f8', color: '#db2777', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <TicketPercent size={18} />
+        <div className="customer-kpi-card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Coupons</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#fdf2f8', color: '#db2777', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <TicketPercent size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.75rem', fontWeight: 900, color: '#0f172a' }}>
-            {readyCoupons.length} <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#64748b' }}>active</span>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>
+            {readyCoupons.length} <span style={{ fontSize: '0.82rem', fontWeight: 600, color: '#64748b' }}>ready</span>
           </div>
-          <div style={{ fontSize: '0.76rem', color: '#db2777', fontWeight: 700, marginTop: '0.25rem' }}>Ready to apply</div>
+          <div style={{ fontSize: '0.74rem', color: '#db2777', fontWeight: 700, marginTop: '0.2rem' }}>Ready to apply</div>
         </div>
 
-        <div style={{ background: '#ffffff', padding: '1.5rem', borderRadius: '18px', border: '1px solid #e2e8f0', boxShadow: '0 2px 8px rgba(0,0,0,0.03)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-            <span style={{ fontSize: '0.78rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Private Concierge</span>
-            <div style={{ width: '36px', height: '36px', borderRadius: '10px', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Sparkles size={18} />
+        <div className="customer-kpi-card">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <span className="customer-kpi-card-label" style={{ fontWeight: 700, color: '#64748b', textTransform: 'uppercase' }}>Concierge</span>
+            <div style={{ width: '32px', height: '32px', borderRadius: '10px', background: '#fef3c7', color: '#d97706', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Sparkles size={16} />
             </div>
           </div>
-          <div style={{ fontSize: '1.35rem', fontWeight: 900, color: '#0f172a' }}>24/7 Dedicated</div>
-          <div style={{ fontSize: '0.76rem', color: '#059669', fontWeight: 700, marginTop: '0.25rem' }}>Direct Line Active</div>
+          <div className="customer-kpi-card-val" style={{ fontWeight: 900, color: '#0f172a' }}>24/7 Live</div>
+          <div style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 700, marginTop: '0.2rem' }}>Direct Line Active</div>
         </div>
       </div>
 
       {/* ================= AVAILABLE CUSTOMER COUPONS & VOUCHERS ================= */}
-      <div style={{ 
-        background: '#ffffff', 
-        borderRadius: '24px', 
-        border: '1px solid #e2e8f0', 
-        padding: '2.25rem', 
-        boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.04)',
-        marginBottom: '2.5rem'
-      }}>
+      <div className="customer-section-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
               <TicketPercent size={22} color="#4f46e5" />
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+              <h2 className="customer-section-title" style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
                 My Available Coupons & Privilege Vouchers
               </h2>
             </div>
@@ -343,7 +304,7 @@ export default function CustomerDashboard() {
           </div>
 
           {/* Filter Pills */}
-          <div style={{ display: 'flex', background: '#f1f5f9', padding: '3px', borderRadius: '9999px', gap: '2px' }}>
+          <div className="customer-filter-pills-wrap">
             <button
               onClick={() => setCouponFilter('ALL')}
               style={{
@@ -412,11 +373,7 @@ export default function CustomerDashboard() {
             </p>
           </div>
         ) : (
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-            gap: '1.25rem' 
-          }}>
+          <div className="customer-coupons-grid">
             {displayedCoupons.map((coupon) => {
               const isUsed = coupon.usedByCustomer;
               const isWelcome = coupon.isFirstOrderSpecial;
@@ -649,19 +606,12 @@ export default function CustomerDashboard() {
       </div>
 
       {/* ================= SAVED WISHLIST PIECES SHOWCASE ================= */}
-      <div style={{
-        background: '#ffffff',
-        borderRadius: '24px',
-        border: '1px solid #e2e8f0',
-        padding: '2.25rem',
-        boxShadow: '0 4px 20px -2px rgba(15, 23, 42, 0.04)',
-        marginBottom: '2.5rem'
-      }}>
+      <div className="customer-section-card">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', marginBottom: '1.5rem' }}>
           <div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
               <Heart size={22} color="#e11d48" fill="#e11d48" />
-              <h2 style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
+              <h2 className="customer-section-title" style={{ fontSize: '1.4rem', fontWeight: 900, color: '#0f172a', margin: 0 }}>
                 My Saved Wishlist & Favorites
               </h2>
             </div>
@@ -714,11 +664,7 @@ export default function CustomerDashboard() {
             </Link>
           </div>
         ) : (
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-            gap: '1.25rem'
-          }}>
+          <div className="customer-wishlist-grid">
             {wishlist.map((item) => (
               <div
                 key={item.id}
@@ -734,7 +680,7 @@ export default function CustomerDashboard() {
                   boxShadow: '0 2px 8px rgba(0,0,0,0.03)'
                 }}
               >
-                <div style={{ height: '170px', background: '#ffffff', position: 'relative', overflow: 'hidden' }}>
+                <div className="customer-wishlist-card-media" style={{ height: '170px', background: '#ffffff', position: 'relative', overflow: 'hidden' }}>
                   <Link to={`/products/${item.id}`}>
                     <img
                       src={item.imageUrl || 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600'}
@@ -767,12 +713,12 @@ export default function CustomerDashboard() {
                   </button>
                 </div>
 
-                <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
+                <div style={{ padding: '0.85rem', display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'space-between' }}>
                   <div>
-                    <h4 style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', lineHeight: 1.3 }}>
+                    <h4 className="customer-wishlist-card-title" style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.4rem 0', lineHeight: 1.3 }}>
                       {item.name}
                     </h4>
-                    <div style={{ fontSize: '1.05rem', fontWeight: 900, color: '#0f172a', marginBottom: '0.85rem' }}>
+                    <div className="customer-wishlist-card-price" style={{ fontSize: '1.05rem', fontWeight: 900, color: '#0f172a', marginBottom: '0.85rem' }}>
                       {formatINR(item.price)}
                     </div>
                   </div>
@@ -780,6 +726,7 @@ export default function CustomerDashboard() {
                   <button
                     type="button"
                     onClick={() => handleMoveWishlistToCart(item)}
+                    className="customer-wishlist-card-btn"
                     style={{
                       display: 'flex',
                       alignItems: 'center',

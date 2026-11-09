@@ -416,9 +416,15 @@ export default function Navbar({ onCartOpen }) {
       <div className="amz-subnav-bar">
         <div className="amz-subnav-inner">
           <div className="amz-subnav-links">
-            <NavLink to="/shop" className={({ isActive }) => `amz-subnav-item ${isActive && !location.search ? 'active' : ''}`}>
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(true)}
+              className="amz-subnav-item amz-subnav-all-btn"
+              title="Open All Categories & Menu"
+              style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}
+            >
               <Menu size={15} /> All Categories
-            </NavLink>
+            </button>
             <NavLink to="/shop?sort=discount,desc" className="amz-subnav-item amz-subnav-deal">
               <Flame size={15} color="#38bdf8" /> Today's Deals
             </NavLink>

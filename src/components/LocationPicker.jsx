@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { MapPin, Navigation, Search, Loader2, X, CheckCircle2 } from 'lucide-react';
+import { MapPin, Navigation, Search, Loader2, X, CheckCircle2, ChevronDown } from 'lucide-react';
 
 // Free reverse geocoding via OpenStreetMap Nominatim (no API key needed)
 async function reverseGeocode(lat, lon) {
@@ -66,6 +66,17 @@ export default function LocationPicker() {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
+  // Prevent background scroll when bottom sheet is open on mobile
+  useEffect(() => {
+    if (open) {
+      const origOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = origOverflow;
+      };
+    }
+  }, [open]);
+
   // Debounced search
   useEffect(() => {
     if (!query.trim() || query.length < 2) {
@@ -121,14 +132,14 @@ export default function LocationPicker() {
     setTimeout(() => {
       setConfirmed(false);
       setOpen(false);
-    }, 600);
+    }, 500);
   };
 
   // Popular Indian cities for quick pick
   const quickCities = [
+    { city: 'Bengaluru', pincode: '560001', display: 'Bengaluru 560001' },
     { city: 'Mumbai', pincode: '400001', display: 'Mumbai 400001' },
     { city: 'Delhi', pincode: '110001', display: 'Delhi 110001' },
-    { city: 'Bengaluru', pincode: '560001', display: 'Bengaluru 560001' },
     { city: 'Hyderabad', pincode: '500001', display: 'Hyderabad 500001' },
     { city: 'Chennai', pincode: '600001', display: 'Chennai 600001' },
     { city: 'Kolkata', pincode: '700001', display: 'Kolkata 700001' },
@@ -137,15 +148,16 @@ export default function LocationPicker() {
   ];
 
   return (
-    <div style={{ position: 'relative' }} ref={dropRef}>
+    <div className="amz-location-picker-container" ref={dropRef}>
       {/* Trigger Button */}
       <button
         onClick={() => setOpen((o) => !o)}
         className="nav-location-btn amz-header-location-btn"
         title="Change delivery location"
         type="button"
+        aria-label={`Deliver to ${location.display}`}
       >
-        <MapPin size={16} color="#4f46e5" style={{ flexShrink: 0 }} />
+        <MapPin size={15} className="amz-location-pin-icon" style={{ flexShrink: 0 }} />
         <div className="nav-location-text-wrap">
           <span className="nav-location-label">
             Deliver to
@@ -154,76 +166,62 @@ export default function LocationPicker() {
             {location.display}
           </span>
         </div>
+        <ChevronDown size={14} className="amz-location-chevron" style={{ flexShrink: 0, opacity: 0.7 }} />
       </button>
 
-      {/* Mobile Backdrop */}
+      {/* Backdrop for Mobile & Desktop click-away */}
       {open && (
         <div 
-          className="location-backdrop-mobile"
+          className="amz-location-backdrop"
           onClick={() => setOpen(false)}
+          aria-label="Close location picker"
         />
       )}
 
-      {/* Dropdown Panel */}
+      {/* Dropdown Panel / Mobile Bottom Sheet */}
       {open && (
-        <div className="amz-location-dropdown-panel" style={{
-          position: 'absolute',
-          top: 'calc(100% + 8px)',
-          right: 0,
-          left: 'auto',
-          zIndex: 9999,
-          width: '320px',
-          maxWidth: 'calc(100vw - 20px)',
-          background: '#ffffff',
-          border: '1px solid #e2e8f0',
-          borderRadius: '16px',
-          boxShadow: '0 20px 40px -10px rgba(15, 23, 42, 0.15)',
-          overflow: 'hidden',
-        }}>
+        <div className="amz-location-dropdown-panel" role="dialog" aria-modal="true" aria-label="Choose delivery destination">
+          {/* Mobile Sheet Drag Indicator Pill */}
+          <div className="amz-sheet-drag-pill" />
+
           {/* Header */}
-          <div style={{ padding: '1rem 1.15rem 0.85rem', borderBottom: '1px solid #f1f5f9', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div className="amz-location-panel-header">
             <div>
-              <div style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.95rem' }}>Select Destination</div>
-              <div style={{ color: '#64748b', fontSize: '0.75rem', marginTop: '2px' }}>White glove courier & transit estimated to this region</div>
+              <div className="amz-location-panel-title">Choose your location</div>
+              <div className="amz-location-panel-sub">Select delivery destination to check express arrival times</div>
             </div>
-            <button onClick={() => setOpen(false)} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '50%', cursor: 'pointer', color: '#64748b', width: '28px', height: '28px', display: 'flex', alignItems: 'center', justifyItems: 'center', justifyContent: 'center' }}>
-              <X size={15} />
+            <button 
+              type="button"
+              onClick={() => setOpen(false)} 
+              className="amz-location-close-btn"
+              aria-label="Close location picker"
+            >
+              <X size={16} />
             </button>
           </div>
 
-          <div style={{ padding: '1rem 1.15rem', display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-            {/* Current location display */}
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem', padding: '0.65rem 0.85rem', background: '#eef2ff', borderRadius: '10px', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
+          <div className="amz-location-panel-body">
+            {/* Current Active Location Display */}
+            <div className="amz-location-active-badge">
               {confirmed ? <CheckCircle2 size={18} color="#10b981" /> : <MapPin size={18} color="#4f46e5" />}
-              <div>
+              <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Active Destination</div>
-                <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#0f172a' }}>{location.display}</div>
+                <div style={{ fontSize: '0.92rem', fontWeight: 800, color: '#0f172a' }}>{location.display}</div>
               </div>
+              {confirmed && (
+                <span style={{ fontSize: '0.74rem', color: '#059669', fontWeight: 800 }}>Saved!</span>
+              )}
             </div>
 
             {/* Use My Location Button */}
             <button
               onClick={useMyLocation}
               disabled={geoLoading}
-              style={{
-                width: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.5rem',
-                padding: '0.65rem',
-                background: '#0f172a',
-                border: 'none',
-                borderRadius: '10px',
-                color: '#ffffff',
-                fontWeight: 600,
-                fontSize: '0.85rem',
-                cursor: geoLoading ? 'wait' : 'pointer',
-                transition: 'all 0.2s ease',
-              }}
+              type="button"
+              className="amz-detect-location-btn"
             >
-              {geoLoading ? <Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> : <Navigation size={16} />}
-              {geoLoading ? 'Pinpointing Coordinates...' : 'Detect Current Location'}
+              {geoLoading ? <Loader2 size={16} className="amz-spin" /> : <Navigation size={16} />}
+              <span>{geoLoading ? 'Pinpointing Coordinates...' : 'Detect My Current Location'}</span>
             </button>
 
             {/* Search Box */}
@@ -231,78 +229,47 @@ export default function LocationPicker() {
               <Search size={15} color="#94a3b8" style={{ position: 'absolute', left: '0.75rem', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} />
               <input
                 type="text"
-                placeholder="Search city or pincode..."
+                placeholder="Enter city or 6-digit pincode..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 autoFocus
-                style={{
-                  width: '100%',
-                  background: '#f8fafc',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '10px',
-                  padding: '0.6rem 1rem 0.6rem 2.25rem',
-                  color: '#0f172a',
-                  fontSize: '0.88rem',
-                  outline: 'none',
-                  boxSizing: 'border-box',
-                }}
+                className="amz-location-search-input"
               />
-              {searching && <Loader2 size={14} color="#64748b" style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)', animation: 'spin 1s linear infinite' }} />}
+              {searching && (
+                <Loader2 size={14} color="#64748b" className="amz-spin" style={{ position: 'absolute', right: '0.75rem', top: '50%', transform: 'translateY(-50%)' }} />
+              )}
             </div>
 
             {/* Search Results */}
             {results.length > 0 && (
-              <div style={{ maxHeight: '160px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '3px' }}>
+              <div className="amz-location-results-list">
                 {results.map((r, i) => (
                   <button
                     key={i}
+                    type="button"
                     onClick={() => applyLocation(r)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '0.6rem',
-                      padding: '0.55rem 0.75rem',
-                      background: 'transparent',
-                      border: 'none',
-                      borderRadius: '8px',
-                      color: '#0f172a',
-                      fontSize: '0.85rem',
-                      cursor: 'pointer',
-                      textAlign: 'left',
-                      width: '100%',
-                    }}
-                    onMouseOver={e => e.currentTarget.style.background = '#f1f5f9'}
-                    onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+                    className="amz-location-result-item"
                   >
-                    <MapPin size={14} color="#64748b" style={{ flexShrink: 0 }} />
-                    <div>
-                      <div style={{ fontWeight: 600 }}>{r.city}</div>
-                      {r.pincode && <div style={{ fontSize: '0.75rem', color: '#64748b' }}>{r.state} {r.pincode}</div>}
+                    <MapPin size={15} color="#4f46e5" style={{ flexShrink: 0 }} />
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontWeight: 700, fontSize: '0.88rem', color: '#0f172a' }}>{r.city}</div>
+                      {r.pincode && <div style={{ fontSize: '0.76rem', color: '#64748b' }}>{r.state} {r.pincode}</div>}
                     </div>
                   </button>
                 ))}
               </div>
             )}
 
-            {/* Divider */}
-            <div style={{ borderTop: '1px solid #f1f5f9', paddingTop: '0.6rem' }}>
-              <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: '0.5rem' }}>Popular Metros</div>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem' }}>
+            {/* Popular Metros Chips */}
+            <div className="amz-popular-metros-wrap">
+              <div className="amz-popular-metros-title">Popular Delivery Hubs</div>
+              <div className="amz-popular-metros-chips">
                 {quickCities.map((c) => (
                   <button
                     key={c.city}
+                    type="button"
                     onClick={() => applyLocation(c)}
-                    style={{
-                      padding: '0.35rem 0.75rem',
-                      fontSize: '0.78rem',
-                      fontWeight: 600,
-                      background: location.city === c.city ? '#0f172a' : '#f8fafc',
-                      border: location.city === c.city ? '1px solid #0f172a' : '1px solid #e2e8f0',
-                      borderRadius: '9999px',
-                      color: location.city === c.city ? '#ffffff' : '#475569',
-                      cursor: 'pointer',
-                      transition: 'all 0.15s ease',
-                    }}
+                    className={`amz-metro-chip ${location.city === c.city ? 'active' : ''}`}
                   >
                     {c.city}
                   </button>
@@ -312,15 +279,11 @@ export default function LocationPicker() {
           </div>
 
           {/* Footer note */}
-          <div style={{ padding: '0.6rem 1rem', background: '#f8fafc', borderTop: '1px solid #f1f5f9', fontSize: '0.72rem', color: '#94a3b8', textAlign: 'center' }}>
-            Powered by OpenStreetMap · Realtime Geolocation
+          <div className="amz-location-panel-footer">
+            Powered by OpenStreetMap · Instant Pincode Routing
           </div>
         </div>
       )}
-
-      <style>{`
-        @keyframes spin { from { transform: translateY(-50%) rotate(0deg); } to { transform: translateY(-50%) rotate(360deg); } }
-      `}</style>
     </div>
   );
 }

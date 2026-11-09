@@ -220,7 +220,7 @@ function OrderCard({ order }) {
 
             {/* Expanded: payment + address row */}
             <div style={{
-              display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '0.5rem',
+              display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '0.75rem', marginTop: '0.5rem',
             }}>
               <div style={{
                 padding: '1rem', borderRadius: '12px',
@@ -248,7 +248,7 @@ function OrderCard({ order }) {
 
         {/* ── Card footer: actions ──────────────────────── */}
         <div style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem',
           marginTop: '1.25rem', paddingTop: '1rem', borderTop: '1px solid #f1f5f9',
         }}>
           <button
