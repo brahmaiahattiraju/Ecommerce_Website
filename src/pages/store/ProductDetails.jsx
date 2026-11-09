@@ -67,20 +67,28 @@ export default function ProductDetails() {
 
   const handleAddToCart = async () => {
     setAddingToCart(true);
-    const ok = await addToCart(product.id, quantity, product);
-    if (ok) {
-      toast.success(`${product.name} (Qty: ${quantity}) added to cart!`);
-    } else {
+    try {
+      const ok = await addToCart(product.id, quantity, product);
+      if (ok) {
+        toast.success(`${product.name} (Qty: ${quantity}) added to cart!`);
+      } else {
+        toast.error('Failed to add product to cart');
+      }
+    } catch (e) {
       toast.error('Failed to add product to cart');
+    } finally {
+      setAddingToCart(false);
     }
-    setAddingToCart(false);
   };
 
   const handleBuyNow = async () => {
     setAddingToCart(true);
-    const ok = await addToCart(product.id, quantity, product);
-    setAddingToCart(false);
-    if (ok) {
+    try {
+      await addToCart(product.id, quantity, product);
+    } catch (e) {
+      console.warn('Buy now cart sync warning:', e);
+    } finally {
+      setAddingToCart(false);
       navigate('/checkout');
     }
   };

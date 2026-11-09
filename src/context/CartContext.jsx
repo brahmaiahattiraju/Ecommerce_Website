@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react';
 import { useAuth } from './AuthContext';
-import { productAPI, couponAPI } from '../services/api';
+import { productAPI, couponAPI, cartAPI } from '../services/api';
 
 const CartContext = createContext(null);
 
@@ -36,27 +36,24 @@ export function CartProvider({ children }) {
           for (const it of guestItems) {
             const pid = it.product?.id || it.productId || it.id;
             if (pid) {
-              await fetch('/api/cart/items', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-                body: JSON.stringify({ productId: pid, quantity: it.quantity || 1 })
-              }).catch(() => {});
+              await cartAPI.addItem({ productId: pid, quantity: it.quantity || 1 }).catch(() => {});
             }
           }
           localStorage.removeItem('aura_guest_cart');
         }
       }
 
-      const res = await fetch('/api/cart', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
+      const data = await cartAPI.get();
+      if (data) {
         setCartId(data.id);
         setCartItems(data.items || []);
       }
     } catch (e) {
-      console.error('Failed to fetch cart', e);
+      console.warn('Failed to fetch backend cart, using local fallback:', e);
+      try {
+        const saved = localStorage.getItem('aura_guest_cart');
+        if (saved) setCartItems(JSON.parse(saved));
+      } catch {}
     }
   }, [isAuthenticated, token]);
 
@@ -65,25 +62,21 @@ export function CartProvider({ children }) {
   }, [fetchCart]);
 
   const addToCart = async (productId, quantity = 1, productDetails = null) => {
+    // 1. If authenticated, try adding to live backend cart first
     if (isAuthenticated && token) {
       try {
-        const res = await fetch('/api/cart/items', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
-          body: JSON.stringify({ productId, quantity })
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setCartItems(data.items || []);
+        const data = await cartAPI.addItem({ productId, quantity });
+        if (data && data.items) {
+          setCartId(data.id);
+          setCartItems(data.items);
           return true;
         }
       } catch (e) {
-        console.error('Failed to add to backend cart', e);
+        console.warn('Backend cart add failed, using resilient local fallback:', e);
       }
-      return false;
     }
 
-    // Guest Cart support
+    // 2. Resilient local fallback (works for guests AND as failsafe for authenticated users)
     try {
       let product = productDetails;
       if (!product) {
@@ -121,7 +114,7 @@ export function CartProvider({ children }) {
       });
       return true;
     } catch (e) {
-      console.error('Failed to add to guest cart', e);
+      console.error('Failed to add to cart:', e);
       return false;
     }
   };
@@ -133,21 +126,17 @@ export function CartProvider({ children }) {
 
     if (isAuthenticated && token) {
       try {
-        const res = await fetch(`/api/cart/items/${cartItemId}?quantity=${quantity}`, {
-          method: 'PUT',
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setCartItems(data.items || []);
+        const data = await cartAPI.updateItem(cartItemId, quantity);
+        if (data && data.items) {
+          setCartItems(data.items);
+          return;
         }
       } catch (e) {
-        console.error('Failed to update quantity', e);
+        console.warn('Backend update quantity failed, falling back to local state:', e);
       }
-      return;
     }
 
-    // Guest cart update
+    // Guest / local cart update
     setCartItems((prev) => {
       const updated = prev.map((item) => (item.id === cartItemId ? { ...item, quantity } : item));
       localStorage.setItem('aura_guest_cart', JSON.stringify(updated));
@@ -158,21 +147,17 @@ export function CartProvider({ children }) {
   const removeItem = async (cartItemId) => {
     if (isAuthenticated && token) {
       try {
-        const res = await fetch(`/api/cart/items/${cartItemId}`, {
-          method: 'DELETE',
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        if (res.ok) {
-          const data = await res.json();
-          setCartItems(data.items || []);
+        const data = await cartAPI.removeItem(cartItemId);
+        if (data && data.items) {
+          setCartItems(data.items);
+          return;
         }
       } catch (e) {
-        console.error('Failed to remove item', e);
+        console.warn('Backend removeItem failed, falling back to local state:', e);
       }
-      return;
     }
 
-    // Guest cart remove
+    // Guest / local cart remove
     setCartItems((prev) => {
       const updated = prev.filter((item) => item.id !== cartItemId);
       localStorage.setItem('aura_guest_cart', JSON.stringify(updated));
@@ -189,10 +174,17 @@ export function CartProvider({ children }) {
     }
   });
 
-  const clearCart = () => {
+  const clearCart = async () => {
     setCartItems([]);
     localStorage.removeItem('aura_guest_cart');
     removeCoupon();
+    if (isAuthenticated && token) {
+      try {
+        await cartAPI.clear();
+      } catch (e) {
+        console.warn('Backend clear cart failed:', e);
+      }
+    }
   };
 
   const itemCount = cartItems.reduce((sum, item) => sum + item.quantity, 0);
